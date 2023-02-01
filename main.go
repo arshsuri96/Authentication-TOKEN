@@ -169,8 +169,21 @@ func SignInHandler(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte(tokenString))
 }
 
-func getSignedToken() {
+func getSignedToken() (string, error) {
+	claimMap := map[string]string{
+		"aud" : "frontend.search.ml",
+		"iss" : "knowsearch.ml",
+		"exp" : fmt.Sprint(time.Now().Add(time.Minute * 1).Unix()),
+	}
 
+	secret := "Secure_Random_string"
+	header := "HS256"
+	tokenString, err := jwt.generateToken(header, claimMapm secret)
+	if err != nil {
+		return tokenString, err
+	}
+
+	return tokenString, err
 }
 
 func validateUser(email string, passwordHash string) (bool, error) {
