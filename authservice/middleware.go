@@ -1,5 +1,0 @@
-package authservice
-
-func tokenVlaidationMiddleware() {
-
-}
